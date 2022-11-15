@@ -22,12 +22,13 @@ public final class SimpleGUI {
     private final JFrame frame = new JFrame("Simple GUI");
 
     private SimpleGUI(final Controller controller) {
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new BorderLayout());
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
 
         final JTextArea text = new JTextArea();
         final JButton save = new JButton("Save");
         save.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 try {
                     controller.save(text.getText());
@@ -37,20 +38,17 @@ public final class SimpleGUI {
             }
         });
 
-        panel1.add(text, BorderLayout.CENTER);
-        panel1.add(save, BorderLayout.SOUTH);
-        frame.setContentPane(panel1);
+        panel.add(text, BorderLayout.CENTER);
+        panel.add(save, BorderLayout.SOUTH);
+        frame.setContentPane(panel);
 
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        frame.setSize(sw / 2, sh / 2);
+        frame.setSize(sw / 3, sh / 3);
         frame.setLocationByPlatform(true);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    private void display() {
         frame.setVisible(true);
     }
 
@@ -59,7 +57,6 @@ public final class SimpleGUI {
      *            unused
      */
     public static void main(final String... a) {
-        final SimpleGUI gui = new SimpleGUI(new Controller());
-        gui.display();
+        new SimpleGUI(new Controller());
     }
 }

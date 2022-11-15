@@ -46,6 +46,7 @@ public class Controller {
      *            the file where to write
      */
     public void setCurrentFile(final File file) {
+        // we check that the file has a parent so that we know that the file path is valid
         final File parent = file.getParentFile();
         if (parent.exists()) {
             currentFile = file;
@@ -53,13 +54,4 @@ public class Controller {
             throw new IllegalArgumentException("Cannot save in a non-existing folder.");
         }
     }
-
-    /**
-     * @param file
-     *            the file where to write
-     */
-    public void setCurrentFile(final String file) {
-        setCurrentFile(new File(file));
-    }
-
 }
