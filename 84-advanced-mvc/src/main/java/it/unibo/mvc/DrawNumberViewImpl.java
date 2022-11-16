@@ -117,4 +117,8 @@ public final class DrawNumberViewImpl implements DrawNumberView {
     private void plainMessage(final String msg) {
         JOptionPane.showMessageDialog(frame, msg, "Result", JOptionPane.PLAIN_MESSAGE);
     }
+
+    public void displayError(final String msg) {
+        JOptionPane.showMessageDialog(frame, msg, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }

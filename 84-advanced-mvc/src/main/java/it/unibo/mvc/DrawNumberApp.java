@@ -1,22 +1,23 @@
 package it.unibo.mvc;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  */
 public final class DrawNumberApp implements DrawNumberViewObserver {
-    private static final int MIN = 0;
-    private static final int MAX = 100;
-    private static final int ATTEMPTS = 10;
-
     private final DrawNumber model;
     private final List<DrawNumberView> views;
 
     /**
      * @param views
      *            the views to attach
+     * @throws IOException
      */
     public DrawNumberApp(final DrawNumberView... views) {
         /*
@@ -27,7 +28,35 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             view.setObserver(this);
             view.start();
         }
-        this.model = new DrawNumberImpl(MIN, MAX, ATTEMPTS);
+        int min = 0, max = 100, attempts = 10;
+        try (final BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("config.yml")))) {
+            String setting;
+            while ((setting = reader.readLine()) != null) {
+                StringTokenizer stringTokenizer = new StringTokenizer(setting, ": ");
+                switch (stringTokenizer.nextToken()) {
+                    case "minimum":
+                        min = Integer.valueOf(stringTokenizer.nextToken());
+                        break;
+                    case "maximum":
+                        max = Integer.valueOf(stringTokenizer.nextToken());
+                        break;
+                    case "attempts":
+                        attempts = Integer.valueOf(stringTokenizer.nextToken());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } catch (IOException e) {
+            displayErrors("Couldn't open config file! Using default values...");
+        }
+        this.model = new DrawNumberImpl(min, max, attempts);
+    }
+
+    private void displayErrors(String msg) {
+        for (final DrawNumberView view : views) {
+            view.displayError(msg);
+        }
     }
 
     @Override
@@ -66,7 +95,6 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      * @throws FileNotFoundException 
      */
     public static void main(final String... args) throws FileNotFoundException {
-        new DrawNumberApp(new DrawNumberViewImpl());
+        new DrawNumberApp(new DrawNumberViewImpl(), new DrawNumberViewImpl(), new PrintStreamView("main.log"), new PrintStreamView(System.out));
     }
-
 }
