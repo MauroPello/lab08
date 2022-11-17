@@ -6,9 +6,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Random;
@@ -64,9 +64,9 @@ public class BadIOGUI {
                  * operation. I/O operations may take a long time, during which
                  * your UI becomes completely unresponsive.
                  */
-                try (PrintStream ps = new PrintStream(PATH)) {
+                try (PrintStream ps = new PrintStream(PATH, StandardCharsets.UTF_8)) { 
                     ps.print(randomGenerator.nextInt());
-                } catch (FileNotFoundException e1) {
+                } catch (IOException e1) {
                     JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -76,7 +76,7 @@ public class BadIOGUI {
             public void actionPerformed(final ActionEvent e) {
                 try {
                     final List<String> fileContent = Files.readAllLines(new File(PATH).toPath());
-                    for(final String elem : fileContent) {
+                    for (final String elem : fileContent) {
                         System.out.println(elem); // NOPMD: required
                     }
                 } catch (IOException e1) {
