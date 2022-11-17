@@ -46,14 +46,14 @@ public final class SimpleGUI {
             @Override
             public void actionPerformed(final ActionEvent event) {
                 final StringBuilder stringBuilder = new StringBuilder();
-                for(final String elem : controller.getHistory()) {
+                for (final String elem : controller.getHistory()) {
                     stringBuilder.append(elem + "\n");
                 }
                 textArea.setText(stringBuilder.toString());
             }
         });
         buttonPanel.add(showHistory, BorderLayout.EAST);
-        
+
         frame.setContentPane(mainPanel);
 
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();

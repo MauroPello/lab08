@@ -5,14 +5,16 @@ import java.util.List;
 
 /**
  * 
- *
  */
 public final class SimpleController implements Controller {
 
     private String nextString = "";
-    final private List<String> history;
+    private final List<String> history;
 
-    public SimpleController(){
+    /**
+     * 
+     */
+    public SimpleController() {
         history = new ArrayList<>(0);
     }
 
@@ -25,6 +27,9 @@ public final class SimpleController implements Controller {
         this.nextString = nextString;
     }
 
+    /**
+     * @return next string to be printed
+     */
     public String getNextString() {
         return this.nextString;
     }
@@ -39,7 +44,7 @@ public final class SimpleController implements Controller {
         if (nextString == null) {
             throw new IllegalStateException("Next string is null");
         }
-        
+
         System.out.println(nextString); // NOPMD: required
         history.add(nextString);
         nextString = "";
