@@ -26,7 +26,7 @@ public final class SimpleGUIWithFileChooser {
     private SimpleGUIWithFileChooser(final Controller controller) {
         final JPanel firstPanel = new JPanel();
         firstPanel.setLayout(new BorderLayout());
-        
+
         final JTextArea textArea = new JTextArea();
         final JButton save = new JButton("Save");
         save.addActionListener(new ActionListener() {
@@ -39,10 +39,9 @@ public final class SimpleGUIWithFileChooser {
                 }
             }
         });
-        
         final JPanel secondPanel = new JPanel();
         secondPanel.setLayout(new BorderLayout());
-        
+
         final JTextField textField = new JTextField(controller.getCurrentFilePath());
         final JButton browse = new JButton("Browse...");
         browse.addActionListener(new ActionListener() {
@@ -61,7 +60,7 @@ public final class SimpleGUIWithFileChooser {
 
         secondPanel.add(textField, BorderLayout.CENTER);
         secondPanel.add(browse, BorderLayout.LINE_END);
-        
+
         firstPanel.add(secondPanel, BorderLayout.NORTH);
         firstPanel.add(textArea, BorderLayout.CENTER);
         firstPanel.add(save, BorderLayout.SOUTH);
